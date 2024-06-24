@@ -6,13 +6,18 @@ import { LuArrowLeftFromLine } from "react-icons/lu";
 import { LuTrash2 } from "react-icons/lu";
 import { LuPencil } from "react-icons/lu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
-export default function ChatList() {
-  const [isOpen, setIsOpen] = useState(true);
-
+export default function ChatList({
+  setIsSideBarOpen,
+  isSideBarOpen
+}: {
+  setIsSideBarOpen: Dispatch<SetStateAction<boolean>>,
+  isSideBarOpen: boolean
+}) {
+  
   function handleCloseSidebar() {
-    setIsOpen(false);
+    setIsSideBarOpen(false);
   }
 
   function handleNewChat() {
@@ -20,7 +25,7 @@ export default function ChatList() {
   }
 
   return (
-    isOpen &&
+    isSideBarOpen &&
     <div className='hidden md:block'>
       <div className="h-svh overflow-x-scroll md:max-w-64 border border-y-0 border-l-0 border-white/15">
         <div className='flex flex-col'>
