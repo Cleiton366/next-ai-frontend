@@ -31,7 +31,7 @@ export default function Chat() {
 
   return (
     <div className='flex flex-col w-full'>
-      <div className='flex justify-between px-10 py-5 shadow-lg shadow-cyan-500/15'>
+      <div className='flex justify-between bg-primary px-2 md:px-10 py-5 shadow-lg shadow-cyan-500/15 sticky top-0'>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button className='bg-primary border-[0.1rem] border-white/15'>Model: llama 3 8b</Button>
@@ -70,11 +70,12 @@ export default function Chat() {
         </DropdownMenu>
         <div>
           <Button className='bg-accent border-[0.1rem] border-white/15'>
-            <FaGoogle className='h-5 w-5 mr-2' />
-            Sign in with Google</Button>
+            <FaGoogle className='md:h-5 md:w-5 mr-2' />
+            <span className='text-[8pt] md:text[14pt]'>Sign in with Google</span>
+          </Button>
         </div>
       </div>
-      <div className="flex h-[45rem] overflow-x-scroll p-5 md:p-10 justify-center">
+      <div className="flex md:h-[44rem] lg:h-[45rem] overflow-x-scroll scroll-smooth p-5 md:p-10 justify-center">
         <div className="flex flex-col w-full max-w-4xl">
           {
             chats[0].messages.map((chat, i: number) => (
@@ -92,8 +93,8 @@ export default function Chat() {
           }
         </div>
       </div>
-      <div className='flex justify-center py-10 px-20'>
-        <Input className='md:max-w-[40rem] bg-accent p-5 border-white/15' type="text" placeholder="Message with NextAI" />
+      <div className='flex w-full justify-center bg-primary py-10 px-5 md:px-20 sticky bottom-0'>
+        <Input className='w-full md:max-w-[40rem] bg-accent p-5 border-white/15' type="text" placeholder="Message with NextAI" />
       </div>
     </div>
   )
