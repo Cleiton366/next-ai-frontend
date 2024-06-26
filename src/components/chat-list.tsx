@@ -7,15 +7,20 @@ import { LuTrash2 } from "react-icons/lu";
 import { LuPencil } from "react-icons/lu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 import { Dispatch, SetStateAction, useState } from 'react';
+import Message from '@/interfaces/message';
 
 export default function ChatList({
   setIsSideBarOpen,
-  isSideBarOpen
+  isSideBarOpen,
+  currentChat,
+  setCurrentChat
 }: {
   setIsSideBarOpen: Dispatch<SetStateAction<boolean>>,
-  isSideBarOpen: boolean
+  isSideBarOpen: boolean,
+  currentChat: Message[],
+  setCurrentChat: Dispatch<SetStateAction<Message[]>>
 }) {
-  
+
   function handleCloseSidebar() {
     setIsSideBarOpen(false);
   }
@@ -55,30 +60,32 @@ export default function ChatList({
             </TooltipProvider>
           </div>
           {chats.map((chat, i: number) => (
-            <div key={i} className="">
-              <div className="flex w-64 h-16 px-2 justify-between items-center hover:bg-secondary">
-                <span className='text-[10pt] overflow-hidden w-44'>{chat.name}</span>
-                <div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="flex items-center gap-1">
-                      <HiOutlineDotsVertical />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className='bg-secondary'>
-                      <DropdownMenuItem className='p-0'>
-                        <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>
-                          <span>Rename</span>
-                          <LuPencil />
-                        </div>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className='p-0'>
-                        <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>
-                          <span>Delete</span>
-                          <LuTrash2 />
-                        </div>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
+            <div 
+              key={i} 
+              className="flex w-64 h-16 px-2 justify-between items-center hover:bg-secondary cursor-pointer"
+              onClick={() => setCurrentChat(chat.messages)}
+              >
+              <span className='text-[10pt] overflow-hidden w-44'>{chat.name}</span>
+              <div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center gap-1">
+                    <HiOutlineDotsVertical />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className='bg-secondary'>
+                    <DropdownMenuItem className='p-0'>
+                      <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>
+                        <span>Rename</span>
+                        <LuPencil />
+                      </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className='p-0'>
+                      <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>
+                        <span>Delete</span>
+                        <LuTrash2 />
+                      </div>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
           ))}
