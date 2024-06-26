@@ -7,7 +7,8 @@ type Chat = {
   id: string,
   name: string,
   userId: string,
-  messages: messages[]
+  messages: messages[],
+  createdAt: string
 }
 
 export const chats : Chat[] = [
@@ -67,6 +68,7 @@ export const chats : Chat[] = [
         timestamp: '10:09 AM',
       },
     ],
+    createdAt: '2022-01-01T10:00:00Z'
   },
   {
     id: '2',
@@ -124,6 +126,7 @@ export const chats : Chat[] = [
         timestamp: '11:09 AM',
       },
     ],
+    createdAt: '2022-01-01T11:00:00Z'
   },
   {
     id: '3',
@@ -181,6 +184,7 @@ export const chats : Chat[] = [
         timestamp: '12:09 PM',
       },
     ],
+    createdAt: '2022-01-01T12:00:00Z'
   },
   {
     id: '4',
@@ -238,6 +242,7 @@ export const chats : Chat[] = [
         timestamp: '1:09 PM',
       },
     ],
+    createdAt: '2022-01-01T13:00:00'
   },
   {
     id: '5',
@@ -289,7 +294,66 @@ export const chats : Chat[] = [
         message: 'What are some types of exercise to try?',
         timestamp: '2:08 PM',
       },
-    ]
+    ],
+    createdAt: '2022-01-01T14:00:00Z'
+  },
+  {
+    id: '5',
+    name: 'What are the benefits of regular exercise?',
+    userId: '1',
+    messages: [
+      {
+        role: 'user',
+        message: 'What are the benefits of regular exercise?',
+        timestamp: '1:00 PM',
+      },
+      {
+        role: 'bot',
+        message: 'Regular exercise has numerous benefits for both the body and mind. It can improve cardiovascular health, strengthen muscles and bones, and boost energy levels. Exercise also helps reduce the risk of chronic diseases like heart disease, diabetes, and obesity, and can enhance mental well-being and cognitive function.',
+        timestamp: '1:01 PM',
+      },
+      {
+        role: 'user',
+        message: 'How does exercise improve cardiovascular health?',
+        timestamp: '1:02 PM',
+      },
+      {
+        role: 'bot',
+        message: 'Exercise improves cardiovascular health by strengthening the heart and lungs, increasing circulation, and lowering blood pressure and cholesterol levels. Regular physical activity can reduce the risk of heart disease, stroke, and other cardiovascular conditions, and improve overall heart function and efficiency.',
+        timestamp: '1:03 PM',
+      },
+      {
+        role: 'user',
+        message: 'Can exercise help with weight management?',
+        timestamp: '1:04 PM',
+      },
+      {
+        role: 'bot',
+        message: 'Yes, exercise is essential for weight management and maintaining a healthy body weight. It helps burn calories, build muscle mass, and boost metabolism, which can aid in weight loss and prevent weight gain. Combining regular exercise with a balanced diet is key to achieving and maintaining a healthy weight.',
+        timestamp: '1:05 PM',
+      },
+      {
+        role: 'user',
+        message: 'How does exercise benefit mental health?',
+        timestamp: '1:06 PM',
+      },
+      {
+        role: 'bot',
+        message: 'Exercise benefits mental health by reducing stress, anxiety, and depression, and improving mood and self-esteem. Physical activity releases endorphins, the body\'s feel-good hormones, which can help alleviate symptoms of depression and boost overall emotional well-being. Regular exercise can also enhance cognitive function and reduce the risk of cognitive decline.',
+        timestamp: '1:07 PM',
+      },
+      {
+        role: 'user',
+        message: 'What are some types of exercise to try?',
+        timestamp: '1:08 PM',
+      },
+      {
+        role: 'bot',
+        message: 'There are many types of exercise to try, depending on your fitness goals and preferences. Some popular options include cardio exercises like running, cycling, and swimming, strength training with weights or resistance bands, and flexibility exercises like yoga and Pilates. ',
+        timestamp: '1:09 PM',
+      }
+    ],
+    createdAt: '2022-01-01T12:00:00Z'
   }
 ];
 
