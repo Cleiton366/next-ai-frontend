@@ -9,6 +9,7 @@ import { Dispatch, SetStateAction } from 'react';
 import Message from '@/interfaces/message';
 import { Chat } from '@/interfaces/chat';
 import { Button } from './ui/button';
+import ChatDropdownMenu from './chat-dropdown-menu';
 
 export default function ChatList({
   chats,
@@ -72,27 +73,7 @@ export default function ChatList({
                   onClick={() => setCurrentChat(chat.messages)}
                 >
                   <span className='text-[10pt] overflow-hidden w-44'>{chat.name}</span>
-                  <div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="flex items-center gap-1">
-                        <HiOutlineDotsVertical />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className='bg-secondary'>
-                        <DropdownMenuItem className='p-0'>
-                          <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>
-                            <span>Rename</span>
-                            <LuPencil />
-                          </div>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className='p-0'>
-                          <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>
-                            <span>Delete</span>
-                            <LuTrash2 />
-                          </div>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
+                  <ChatDropdownMenu /> 
                 </div>
               ))
               :

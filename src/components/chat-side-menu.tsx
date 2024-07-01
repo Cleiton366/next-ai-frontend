@@ -11,6 +11,7 @@ import { Chat } from '@/interfaces/chat';
 import User from '@/interfaces/user';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import UserDropdownMenu from './user-dropdown-menu';
+import ChatDropdownMenu from './chat-dropdown-menu';
 
 export default function ChatSideMenu({
   chats,
@@ -48,27 +49,7 @@ export default function ChatSideMenu({
                 onClick={() => handleSetCurrentChat(chat.messages)}
               >
                 <span className='text-[10pt] overflow-hidden w-44'>{chat.name}</span>
-                <div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="flex items-center gap-1">
-                      <HiOutlineDotsVertical />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className='bg-secondary'>
-                      <DropdownMenuItem className='p-0'>
-                        <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>
-                          <span>Rename</span>
-                          <LuPencil />
-                        </div>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className='p-0'>
-                        <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>
-                          <span>Delete</span>
-                          <LuTrash2 />
-                        </div>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
+                <ChatDropdownMenu /> 
               </div>
             )) :
             <div className='flex h-full justify-center items-center'>
