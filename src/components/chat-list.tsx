@@ -8,6 +8,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/t
 import { Dispatch, SetStateAction } from 'react';
 import Message from '@/interfaces/message';
 import { Chat } from '@/interfaces/chat';
+import { Button } from './ui/button';
 
 export default function ChatList({
   chats,
@@ -40,10 +41,9 @@ export default function ChatList({
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <LuArrowLeftFromLine
-                    className='h-6 w-6 cursor-pointer'
-                    onClick={handleCloseSidebar}
-                  />
+                  <Button className='p-0 h-fit' onClick={handleCloseSidebar}>
+                    <LuArrowLeftFromLine className='h-6 w-6' />
+                  </Button>
                 </TooltipTrigger >
                 <TooltipContent className='bg-secondary text-white'>
                   <p>Close sidebar</p>
@@ -53,7 +53,9 @@ export default function ChatList({
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <TbMessagePlus className='h-6 w-6 cursor-pointer' />
+                  <Button className='p-0 h-fit' onClick={handleCloseSidebar}>
+                    <TbMessagePlus className='h-6 w-6' />
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent className='bg-secondary text-white'>
                   <p>New chat</p>
