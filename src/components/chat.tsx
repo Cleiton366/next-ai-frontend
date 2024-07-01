@@ -7,7 +7,11 @@ import { TbMessagePlus } from 'react-icons/tb'
 import { LuArrowRightFromLine } from "react-icons/lu";
 import Message from '@/interfaces/message'
 import ChatSideMenu from './chat-side-menu'
-import DropDownMenu from './drop-down-menu'
+import DropDownMenu from './dropdown-menu'
+import User from '@/interfaces/user';
+import { Chat as IChat } from "@/interfaces/chat";
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import UserDropdownMenu from './user-dropdown-menu';
 
 type message = {
   role: string,
@@ -26,15 +30,21 @@ function setMessageStyle(role: string) {
 }
 
 export default function Chat({
+  chats,
+  setChats,
   setIsSideBarOpen,
   isSideBarOpen,
   currentChat,
-  setCurrentChat
+  setCurrentChat,
+  user
 }: {
+  chats: IChat[],
+  setChats: Dispatch<SetStateAction<IChat[]>>,
   setIsSideBarOpen: Dispatch<SetStateAction<boolean>>,
   isSideBarOpen: boolean,
   currentChat: Message[],
-  setCurrentChat: Dispatch<SetStateAction<Message[]>>
+  setCurrentChat: Dispatch<SetStateAction<Message[]>>,
+  user: User | null
 }) {
   const [chatSideMenu, setChatSideMenu] = useState<boolean>(false);
 
@@ -43,9 +53,11 @@ export default function Chat({
   }, [chatSideMenu]);
 
   return (
-    <div className={`flex relative w-full ${chatSideMenu ? 'h-screen' : ''}`}>
+    <div className={`flex relative w-full min-h-svh ${chatSideMenu ? 'overflow-hidden' : ''}`}>
       {chatSideMenu ?
         <ChatSideMenu
+          user={user}
+          chats={chats}
           setChatSideMenu={setChatSideMenu}
           setCurrentChat={setCurrentChat}
         /> : null}
@@ -61,10 +73,15 @@ export default function Chat({
                 <DropDownMenu />
               </div>
               <div>
-                <Button className='bg-accent border-[0.1rem] border-white/15'>
-                  <FaGoogle className='md:h-5 md:w-5 mr-2' />
-                  <span className='text-[8pt] md:text[14pt]'>Sign in with Google</span>
-                </Button>
+                {
+                  user ?
+                    <UserDropdownMenu user={user} type='small' />
+                    :
+                    <Button className='bg-accent border-[0.1rem] border-white/15'>
+                      <FaGoogle className='md:h-5 md:w-5 mr-2' />
+                      <span className='text-[8pt] md:text[14pt]'>Sign in with Google</span>
+                    </Button>
+                }
               </div>
             </div>
           </div>
@@ -74,7 +91,7 @@ export default function Chat({
             <TbMessagePlus className='h-6 w-6 cursor-pointer' />
           </div>
         </div>
-        <div className="flex md:h-[44rem] lg:h-[45rem] overflow-x-scroll scroll-smooth p-5 md:p-10 justify-center">
+        <div className="flex h-full md:h-[44rem] lg:h-[45rem] overflow-y-scroll scroll-smooth p-5 md:p-10 justify-center">
           <div className="flex flex-col w-full max-w-4xl">
             {
               currentChat.map((chat, i: number) => (
