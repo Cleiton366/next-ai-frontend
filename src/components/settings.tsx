@@ -10,6 +10,7 @@ import {
 import { IoSettingsOutline } from "react-icons/io5"
 import { Separator } from "./ui/separator"
 import { DAlertDialog } from "./alert-dialog"
+import { Archives } from "./archives"
 
 export function Settings() {
   return (
@@ -30,7 +31,7 @@ export function Settings() {
             <h3 className="text-white">Archieves</h3>
             <div className="flex justify-between items-center">
               <DialogDescription>View Archived Chats</DialogDescription>
-              <Button className="bg-accent border-[0.1rem] border-white/15">View Archived</Button>
+              <Archives type="button" />
             </div>
             <div className="flex justify-between items-center">
               <DialogDescription>Archive all chats</DialogDescription>

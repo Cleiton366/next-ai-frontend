@@ -5,6 +5,7 @@ import { MdLogout } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { PiArchiveDuotone } from "react-icons/pi";
 import { Settings } from "./settings";
+import { Archives } from "./archives";
 
 export default function UserDropdownMenu({
   user,
@@ -30,11 +31,8 @@ export default function UserDropdownMenu({
         <DropdownMenuItem className='p-0' onSelect={(e) => e.preventDefault()}>
           <Settings />
         </DropdownMenuItem>
-        <DropdownMenuItem className='p-0'>
-          <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>
-            <span>Archived Chats</span>
-            <PiArchiveDuotone />
-          </div>
+        <DropdownMenuItem className='p-0' onSelect={(e) => e.preventDefault()}>
+          <Archives type='dropdown-item' />
         </DropdownMenuItem>
         <DropdownMenuItem className='p-0'>
           <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>
