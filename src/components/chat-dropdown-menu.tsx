@@ -1,9 +1,7 @@
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { LuPencil, LuTrash2 } from "react-icons/lu";
-import { PiArchiveDuotone } from "react-icons/pi";
 import { ChatAlertDialog } from "./chat-alert-dialog";
-import { Settings } from "./settings";
+import { RenameChatDialog } from "./rename-chat-dialog";
 
 export default function ChatDropdownMenu() {
   return (
@@ -12,14 +10,14 @@ export default function ChatDropdownMenu() {
         <HiOutlineDotsVertical />
       </DropdownMenuTrigger>
       <DropdownMenuContent className='bg-secondary'>
-        <DropdownMenuItem className='p-0'>
-          <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>
-            <span>Rename</span>
-            <LuPencil />
-          </div>
+        <DropdownMenuItem className='p-0' onSelect={(e) => e.preventDefault()}>
+          <RenameChatDialog
+            tittle="Rename Chat"
+            description="Type here new chat name"
+          />
         </DropdownMenuItem>
         <DropdownMenuItem className='p-0' onSelect={(e) => e.preventDefault()}>
-          <ChatAlertDialog 
+          <ChatAlertDialog
             tittle="Archive Chat"
             description="Are you sure you want to archive this chat?"
             type="archive"
@@ -27,7 +25,7 @@ export default function ChatDropdownMenu() {
           />
         </DropdownMenuItem>
         <DropdownMenuItem className='p-0' onSelect={(e) => e.preventDefault()}>
-          <ChatAlertDialog 
+          <ChatAlertDialog
             tittle="Delete Chat"
             description="Are you sure you want to delete this chat?"
             type="delete"
