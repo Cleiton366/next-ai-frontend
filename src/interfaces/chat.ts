@@ -5,7 +5,8 @@ interface Chat {
   name: string,
   userId: string,
   messages: Message[]
-  createdAt: string
+  createdAt: string,
+  isArchived: boolean,
 }
 
 export type { Chat };
