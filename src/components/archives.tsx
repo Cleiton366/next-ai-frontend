@@ -37,7 +37,7 @@ export function Archives({
         {setDialogTrigger()}
       </DialogTrigger>
       <DialogContent
-        className="sm:max-w-[525px] h-[520px] bg-primary"
+        className="sm:max-w-[525px] h-[631px] bg-primary"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
         onPointerMove={(e) => e.stopPropagation()}
