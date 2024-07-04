@@ -1,17 +1,5 @@
+import { Chat } from "./interfaces/chat";
 import User from "./interfaces/user";
-
-type messages = {
-  role: string,
-  message: string,
-  timestamp: string,
-}
-type Chat = {
-  id: string,
-  name: string,
-  userId: string,
-  messages: messages[],
-  createdAt: string
-}
 
 export const chats : Chat[] = [
   {
@@ -70,7 +58,8 @@ export const chats : Chat[] = [
         timestamp: '10:09 AM',
       },
     ],
-    createdAt: '2022-01-01T10:00:00Z'
+    createdAt: '2022-01-01T10:00:00Z',
+    isArchived: false
   },
   {
     id: '2',
@@ -128,7 +117,8 @@ export const chats : Chat[] = [
         timestamp: '11:09 AM',
       },
     ],
-    createdAt: '2022-01-01T11:00:00Z'
+    createdAt: '2022-01-01T11:00:00Z',
+    isArchived: false
   },
   {
     id: '3',
@@ -186,7 +176,8 @@ export const chats : Chat[] = [
         timestamp: '12:09 PM',
       },
     ],
-    createdAt: '2022-01-01T12:00:00Z'
+    createdAt: '2022-01-01T12:00:00Z',
+    isArchived: false
   },
   {
     id: '4',
@@ -244,7 +235,8 @@ export const chats : Chat[] = [
         timestamp: '1:09 PM',
       },
     ],
-    createdAt: '2022-01-01T13:00:00'
+    createdAt: '2022-01-01T13:00:00',
+    isArchived: false
   },
   {
     id: '5',
@@ -297,7 +289,8 @@ export const chats : Chat[] = [
         timestamp: '2:08 PM',
       },
     ],
-    createdAt: '2022-01-01T14:00:00Z'
+    createdAt: '2022-01-01T14:00:00Z',
+    isArchived: false
   },
   {
     id: '5',
@@ -355,7 +348,8 @@ export const chats : Chat[] = [
         timestamp: '1:09 PM',
       }
     ],
-    createdAt: '2022-01-01T12:00:00Z'
+    createdAt: '2022-01-01T12:00:00Z',
+    isArchived: false
   },
   {
     id: '6',
@@ -413,7 +407,8 @@ export const chats : Chat[] = [
         timestamp: '1:09 PM',
       }
     ],
-    createdAt: '2022-01-01T12:00:00Z'
+    createdAt: '2022-01-01T12:00:00Z',
+    isArchived: false
   },
   {
     id: '7',
@@ -471,7 +466,8 @@ export const chats : Chat[] = [
         timestamp: '1:09 PM',
       }
     ],
-    createdAt: '2022-01-01T12:00:00Z'
+    createdAt: '2022-01-01T12:00:00Z',
+    isArchived: false
   },
   {
     id: '8',
@@ -529,7 +525,8 @@ export const chats : Chat[] = [
         timestamp: '1:09 PM',
       }
     ],
-    createdAt: '2022-01-01T12:00:00Z'
+    createdAt: '2022-01-01T12:00:00Z',
+    isArchived: false
   },
   {
     id: '9',
@@ -587,7 +584,8 @@ export const chats : Chat[] = [
         timestamp: '1:09 PM',
       }
     ],
-    createdAt: '2022-01-01T12:00:00Z'
+    createdAt: '2022-01-01T12:00:00Z',
+    isArchived: false
   },
   {
     id: '10',
@@ -645,7 +643,8 @@ export const chats : Chat[] = [
         timestamp: '1:09 PM',
       }
     ],
-    createdAt: '2022-01-01T12:00:00Z'
+    createdAt: '2022-01-01T12:00:00Z',
+    isArchived: false
   },
 ];
 
@@ -654,5 +653,10 @@ export const user : User = {
   name: 'John Doe',
   email: 'email@example.com',
   profilePicture: 'https://random-person-generator.com/storage/images/profile_photos/v1/256x256/6b388676-aeeb-4240-880c-2d36f11f9e1a.jpg',
-  chats: chats
+  chats: chats,
+  preferences: {
+    apiKeys: [],
+    defaultModel: 'gpt-3',
+    defaultProvider: 'server'
+  }
 }
