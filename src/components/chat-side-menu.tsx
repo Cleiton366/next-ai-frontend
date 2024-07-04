@@ -46,10 +46,16 @@ export default function ChatSideMenu({
               <div
                 key={i}
                 className="flex px-5 justify-between items-center hover:bg-secondary cursor-pointer"
-                onClick={() => handleSetCurrentChat(chat.messages)}
               >
-                <span className='text-[10pt] overflow-hidden w-44'>{chat.name}</span>
-                <ChatDropdownMenu /> 
+                <div
+                  className='min-h-12 w-full'
+                  onClick={() => handleSetCurrentChat(chat.messages)}
+                >
+                  <div className='w-40'>
+                  <span className='text-[10pt] overflow-hidden'>{chat.name}</span>
+                  </div>
+                </div>
+                <ChatDropdownMenu />
               </div>
             )) :
             <div className='flex h-full justify-center items-center'>
