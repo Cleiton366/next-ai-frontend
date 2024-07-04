@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 
 type Checked = DropdownMenuCheckboxItemProps["checked"]
 
-export default function DropDownMenu() {
+export default function ModelsDropDownMenu() {
   const [showStatusBar, setShowStatusBar] = useState<Checked>(true);
   const [showActivityBar, setShowActivityBar] = useState<Checked>(false);
   const [showPanel, setShowPanel] = useState<Checked>(false);
