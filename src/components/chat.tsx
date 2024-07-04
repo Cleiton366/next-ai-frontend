@@ -7,10 +7,9 @@ import { TbMessagePlus } from 'react-icons/tb'
 import { LuArrowRightFromLine } from "react-icons/lu";
 import Message from '@/interfaces/message'
 import ChatSideMenu from './chat-side-menu'
-import DropDownMenu from './dropdown-menu'
+import DropDownMenu from './models-dropdown-menu'
 import User from '@/interfaces/user';
 import { Chat as IChat } from "@/interfaces/chat";
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import UserDropdownMenu from './user-dropdown-menu';
 
 type message = {
