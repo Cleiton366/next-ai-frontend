@@ -64,7 +64,7 @@ export function Settings() {
             <Separator />
             <h3 className="text-white">Danger Zone</h3>
             <div className="flex justify-between items-center">
-              <DialogDescription>Delete all chats</DialogDescription>
+              <DialogDescription className="max-w-44 text-red-600 font-semibold">Delete all chats</DialogDescription>
               <DAlertDialog
                 tittle="Delete Chats"
                 description="Are you sure you want to delete all chats?"
@@ -74,7 +74,7 @@ export function Settings() {
               />
             </div>
             <div className="flex justify-between items-center">
-              <DialogDescription className="max-w-44">Delete account and erase all data</DialogDescription>
+              <DialogDescription className="max-w-44 text-red-600 font-semibold">Delete account and erase all data</DialogDescription>
               <DAlertDialog
                 tittle="Delete Account"
                 description="Are you sure you want to delete your account and all data? This action is irreversible."
