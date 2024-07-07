@@ -24,7 +24,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row gap-1 md:gap-4">
             <Button
               className='bg-accent border-[0.1rem] border-white/15'
-              onClick={() => router.push('/chat')}
+              onClick={() => router.push(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/auth/google`)}
             >
               <FaGoogle className='md:h-5 md:w-5 mr-2' />
               <span className='text-[8pt] md:text[14pt]'>Sign in with Google</span>
