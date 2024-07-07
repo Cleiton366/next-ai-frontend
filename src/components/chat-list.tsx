@@ -10,6 +10,8 @@ import Message from '@/interfaces/message';
 import { Chat } from '@/interfaces/chat';
 import { Button } from './ui/button';
 import ChatDropdownMenu from './chat-dropdown-menu';
+import { ChatEntity } from '@/entities/chat/chat-entity';
+import MessageEntity from '@/entities/message/message-entity';
 
 export default function ChatList({
   chats,
@@ -18,11 +20,11 @@ export default function ChatList({
   isSideBarOpen,
   setCurrentChat
 }: {
-  chats: Chat[],
-  setChats: Dispatch<SetStateAction<Chat[]>>,
+  chats: ChatEntity[],
+  setChats: Dispatch<SetStateAction<ChatEntity[]>>,
   setIsSideBarOpen: Dispatch<SetStateAction<boolean>>,
   isSideBarOpen: boolean,
-  setCurrentChat: Dispatch<SetStateAction<Message[]>>
+  setCurrentChat: Dispatch<SetStateAction<MessageEntity[]>>
 }) {
 
   function handleCloseSidebar() {

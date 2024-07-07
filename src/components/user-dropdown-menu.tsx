@@ -2,17 +2,16 @@ import User from "@/interfaces/user";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { MdLogout } from "react-icons/md";
-import { IoSettingsOutline } from "react-icons/io5";
-import { PiArchiveDuotone } from "react-icons/pi";
 import { Settings } from "./settings";
 import { Archives } from "./archives";
+import { UserEntity } from "@/entities/user/user-entity";
 
 export default function UserDropdownMenu({
   user,
   type
 }:
   {
-    user: User,
+    user: UserEntity,
     type: 'small' | 'medium'
   }) {
 

@@ -12,6 +12,9 @@ import User from '@/interfaces/user';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import UserDropdownMenu from './user-dropdown-menu';
 import ChatDropdownMenu from './chat-dropdown-menu';
+import { UserEntity } from '@/entities/user/user-entity';
+import MessageEntity from '@/entities/message/message-entity';
+import { ChatEntity } from '@/entities/chat/chat-entity';
 
 export default function ChatSideMenu({
   chats,
@@ -19,13 +22,13 @@ export default function ChatSideMenu({
   setChatSideMenu,
   user
 }: {
-  chats: Chat[],
-  setCurrentChat: (messages: Message[]) => void,
+  chats: ChatEntity[],
+  setCurrentChat: (messages: MessageEntity[]) => void,
   setChatSideMenu: (value: boolean) => void,
-  user: User | null
+  user: UserEntity | null
 }) {
 
-  function handleSetCurrentChat(messages: Message[]) {
+  function handleSetCurrentChat(messages: MessageEntity[]) {
     setCurrentChat(messages);
     setChatSideMenu(false);
   }

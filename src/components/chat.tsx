@@ -11,6 +11,9 @@ import DropDownMenu from './models-dropdown-menu'
 import User from '@/interfaces/user';
 import { Chat as IChat } from "@/interfaces/chat";
 import UserDropdownMenu from './user-dropdown-menu';
+import { ChatEntity } from '@/entities/chat/chat-entity';
+import MessageEntity from '@/entities/message/message-entity';
+import { UserEntity } from '@/entities/user/user-entity';
 
 type message = {
   role: string,
@@ -37,13 +40,13 @@ export default function Chat({
   setCurrentChat,
   user
 }: {
-  chats: IChat[],
-  setChats: Dispatch<SetStateAction<IChat[]>>,
+  chats: ChatEntity[],
+  setChats: Dispatch<SetStateAction<ChatEntity[]>>,
   setIsSideBarOpen: Dispatch<SetStateAction<boolean>>,
   isSideBarOpen: boolean,
-  currentChat: Message[],
-  setCurrentChat: Dispatch<SetStateAction<Message[]>>,
-  user: User | null
+  currentChat: MessageEntity[],
+  setCurrentChat: Dispatch<SetStateAction<MessageEntity[]>>,
+  user: UserEntity | null
 }) {
   const [chatSideMenu, setChatSideMenu] = useState<boolean>(false);
 
@@ -107,7 +110,7 @@ export default function Chat({
                     className={`flex w-full pt-3 justify-center 
                     ${chat.role === 'user' ? 'md:justify-end' : 'md:justify-start'}`}
                   >
-                    <span className='text-[10pt] text-gray-500'>{chat.timestamp}</span>
+                    <span className='text-[10pt] text-gray-500'>{chat.timestamp.toLocaleTimeString()}</span>
                   </div>
                 </div>
               ))
