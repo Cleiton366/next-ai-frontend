@@ -1,17 +1,10 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu'
-import { HiOutlineDotsVertical } from "react-icons/hi";
 import { TbMessagePlus } from "react-icons/tb";
 import { LuArrowLeftFromLine } from "react-icons/lu";
-import { LuTrash2 } from "react-icons/lu";
-import { LuPencil } from "react-icons/lu";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 import { Dispatch, SetStateAction } from 'react';
-import Message from '@/interfaces/message';
-import { Chat } from '@/interfaces/chat';
 import { Button } from './ui/button';
 import ChatDropdownMenu from './chat-dropdown-menu';
 import { ChatEntity } from '@/entities/chat/chat-entity';
-import MessageEntity from '@/entities/message/message-entity';
 
 export default function ChatList({
   chats,
@@ -75,7 +68,10 @@ export default function ChatList({
                   onClick={() => setCurrentChat(chat)}
                 >
                   <span className='text-[10pt] overflow-hidden w-44'>{chat.name}</span>
-                  <ChatDropdownMenu /> 
+                  <ChatDropdownMenu
+                    chat={chat}
+                    setChats={setChats}
+                  />
                 </div>
               ))
               :
