@@ -16,7 +16,8 @@ import ChatsServices from '@/services/chats-service';
 import { useRef } from 'react';
 import useToast from '@/util/use-toast';
 import { ScrollArea } from './ui/scroll-area';
-import { Box, CircularProgress, LinearProgress } from '@mui/material';
+import { CircularProgress } from '@mui/material';
+import { marked } from "marked";
 
 type message = {
   role: string,
@@ -28,10 +29,6 @@ type Chat = {
   name: string,
   userId: string,
   messages: message[]
-}
-
-function setMessageStyle(role: string) {
-  return role === 'user' ? 'self-end' : 'self-start'
 }
 
 export default function Chat({
@@ -139,6 +136,10 @@ export default function Chat({
 
   function scrollChatToBottom() {
     if (chatContainerRef.current) chatContainerRef.current.scrollIntoView(false);
+  }
+
+  function setMessageStyle(role: string) {
+    return role === 'user' ? 'self-end' : 'self-start'
   }
 
   return (
