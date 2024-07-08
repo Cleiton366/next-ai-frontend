@@ -142,6 +142,11 @@ export default function Chat({
     return role === 'user' ? 'self-end' : 'self-start'
   }
 
+  function getMarkdownText(content: string) {
+    var rawMarkup = marked.parse(content);
+    return { __html: rawMarkup };
+  }
+
   return (
     <div className={`flex relative w-full min-h-svh ${chatSideMenu ? 'overflow-hidden' : ''}`}>
       {chatSideMenu ?
@@ -192,10 +197,19 @@ export default function Chat({
                       className='flex flex-col'
                     >
                       <div className={`my-2 ${setMessageStyle(chat.role)}`}>
-                        <div className="max-w-[28rem]">
+                        <div className="max-w-[40rem]">
                           <div className={`px-3 py-2 rounded-lg 
                       ${chat.role === 'user' ? 'bg-secondary' : 'bg-accent'}`}>
-                            <span className="text-[10pt]">{chat.message}</span>
+                            {/* <div
+                              className="text-[10pt]"
+                              dangerouslySetInnerHTML={getMarkdownText(chat.message)}
+                            /> */}
+                            {
+                              chat.role === 'user' ?
+                              <span className='text-[8pt] md:text-[10pt] break-words whitespace-normal'>{chat.message}</span>
+                              :
+                              <span dangerouslySetInnerHTML={getMarkdownText(chat.message)} className="text-[8pt] md:text-[10pt]"/>
+                            }
                           </div>
                         </div>
                       </div>
