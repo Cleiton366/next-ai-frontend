@@ -1,7 +1,5 @@
 import { Dispatch, LegacyRef, SetStateAction, use, useEffect, useState } from 'react'
-import { Button } from './ui/button'
 import { Input } from './ui/input'
-import { FaGoogle } from "react-icons/fa";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { TbMessagePlus } from 'react-icons/tb'
 import { LuArrowRightFromLine } from "react-icons/lu";
@@ -153,6 +151,7 @@ export default function Chat({
         <ChatSideMenu
           user={user}
           chats={chats}
+          setChats={setChats}
           setChatSideMenu={setChatSideMenu}
           setCurrentChat={setCurrentChat}
         /> : null}
@@ -169,13 +168,7 @@ export default function Chat({
               </div>
               <div>
                 {
-                  user ?
-                    <UserDropdownMenu user={user} type='small' />
-                    :
-                    <Button className='bg-accent border-[0.1rem] border-white/15'>
-                      <FaGoogle className='md:h-5 md:w-5 mr-2' />
-                      <span className='text-[8pt] md:text[14pt]'>Sign in with Google</span>
-                    </Button>
+                  user ? <UserDropdownMenu user={user} type='small' /> : null
                 }
               </div>
             </div>
@@ -200,10 +193,6 @@ export default function Chat({
                         <div className="max-w-[40rem]">
                           <div className={`px-3 py-2 rounded-lg 
                       ${chat.role === 'user' ? 'bg-secondary' : 'bg-accent'}`}>
-                            {/* <div
-                              className="text-[10pt]"
-                              dangerouslySetInnerHTML={getMarkdownText(chat.message)}
-                            /> */}
                             {
                               chat.role === 'user' ?
                               <span className='text-[8pt] md:text-[10pt] break-words whitespace-normal'>{chat.message}</span>
