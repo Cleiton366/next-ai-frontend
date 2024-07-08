@@ -15,6 +15,7 @@ import ChatDropdownMenu from './chat-dropdown-menu';
 import { UserEntity } from '@/entities/user/user-entity';
 import MessageEntity from '@/entities/message/message-entity';
 import { ChatEntity } from '@/entities/chat/chat-entity';
+import { Dispatch, SetStateAction } from 'react';
 
 export default function ChatSideMenu({
   chats,
@@ -23,12 +24,12 @@ export default function ChatSideMenu({
   user
 }: {
   chats: ChatEntity[],
-  setCurrentChat: (messages: MessageEntity[]) => void,
+  setCurrentChat: Dispatch<SetStateAction<ChatEntity | null>>,
   setChatSideMenu: (value: boolean) => void,
   user: UserEntity | null
 }) {
 
-  function handleSetCurrentChat(messages: MessageEntity[]) {
+  function handleSetCurrentChat(messages: ChatEntity) {
     setCurrentChat(messages);
     setChatSideMenu(false);
   }
@@ -52,7 +53,7 @@ export default function ChatSideMenu({
               >
                 <div
                   className='min-h-12 w-full'
-                  onClick={() => handleSetCurrentChat(chat.messages)}
+                  onClick={() => handleSetCurrentChat(chat)}
                 >
                   <div className='w-40'>
                   <span className='text-[10pt] overflow-hidden'>{chat.name}</span>

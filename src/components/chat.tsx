@@ -1,19 +1,20 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, use, useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { FaGoogle } from "react-icons/fa";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { TbMessagePlus } from 'react-icons/tb'
 import { LuArrowRightFromLine } from "react-icons/lu";
-import Message from '@/interfaces/message'
 import ChatSideMenu from './chat-side-menu'
 import DropDownMenu from './models-dropdown-menu'
-import User from '@/interfaces/user';
-import { Chat as IChat } from "@/interfaces/chat";
 import UserDropdownMenu from './user-dropdown-menu';
 import { ChatEntity } from '@/entities/chat/chat-entity';
 import MessageEntity from '@/entities/message/message-entity';
 import { UserEntity } from '@/entities/user/user-entity';
+import MessagesService from '@/services/messages-service';
+import ChatsServices from '@/services/chats-service';
+import { toast } from './ui/use-toast';
+import useToast from '@/util/use-toast';
 
 type message = {
   role: string,
@@ -44,15 +45,85 @@ export default function Chat({
   setChats: Dispatch<SetStateAction<ChatEntity[]>>,
   setIsSideBarOpen: Dispatch<SetStateAction<boolean>>,
   isSideBarOpen: boolean,
-  currentChat: MessageEntity[],
-  setCurrentChat: Dispatch<SetStateAction<MessageEntity[]>>,
+  currentChat: ChatEntity | null,
+  setCurrentChat: Dispatch<SetStateAction<ChatEntity | null>>,
   user: UserEntity | null
 }) {
   const [chatSideMenu, setChatSideMenu] = useState<boolean>(false);
+  const messagesServices = new MessagesService();
+  const chatsServices = new ChatsServices();
 
-  useEffect(() => {
+  async function handleSendMessage(message: string) {
+    const chat = currentChat ? currentChat : await createChat(message);
 
-  }, [chatSideMenu]);
+    if (!chat) {
+      useToast('Error', 'Failed to create chat');
+      return;
+    }
+    const userMessage : MessageEntity = {
+      chatId: chat.id,
+      id: '',
+      message: message,
+      role: 'user',
+      timestamp: new Date()
+    }
+
+    const newCurrentChat = {
+      ...chat,
+      messages: chat.messages.concat(userMessage) 
+    }
+    setCurrentChat(newCurrentChat);
+
+    const reply = await messagesServices.postMessage({
+      role: 'user',
+      message: message,
+      chatId: chat.id
+    });
+
+    if (!reply) {
+      useToast('Error', 'Failed to send message');
+      return;
+    }
+
+    await updateChat(chat.id);
+  }
+
+  async function createChat(message: string): Promise<ChatEntity | null> {
+    const newChat: ChatEntity | null = await chatsServices.createChat({
+      name: message,
+      userId: user?.id || ''
+    });
+    return newChat ? newChat : null;
+  }
+
+  async function updateChat(currentChatId: string) {
+    const chats = await chatsServices.getChats(user?.id || '');
+    const chat = chats?.find(chat => chat.id === currentChatId);
+    if (!chat || !chats) {
+      useToast('Error', 'Failed to update chat');
+      return;
+    } else {
+      setChats(chats);
+      setCurrentChat(chat);
+    }
+  }
+
+  const handleKeyUp = async (event: any) => {
+    if (event.keyCode === 13) {
+      const msg = event.target.value;
+      event.target.value = '';
+      await handleSendMessage(msg);
+    }
+  };
+
+  function formatTimestampToHour(timestamp: Date) {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    });
+  }
 
   return (
     <div className={`flex relative w-full min-h-svh ${chatSideMenu ? 'overflow-hidden' : ''}`}>
@@ -96,7 +167,7 @@ export default function Chat({
         <div className="flex h-full md:h-[44rem] lg:h-[45rem] overflow-y-scroll scroll-smooth p-5 md:p-10 justify-center">
           <div className="flex flex-col w-full max-w-4xl">
             {
-              currentChat.map((chat, i: number) => (
+              currentChat?.messages.map((chat, i: number) => (
                 <div key={i} className='flex flex-col'>
                   <div className={`my-2 ${setMessageStyle(chat.role)}`}>
                     <div className="max-w-[28rem]">
@@ -110,7 +181,10 @@ export default function Chat({
                     className={`flex w-full pt-3 justify-center 
                     ${chat.role === 'user' ? 'md:justify-end' : 'md:justify-start'}`}
                   >
-                    <span className='text-[10pt] text-gray-500'>{chat.timestamp.toLocaleTimeString()}</span>
+                    <span className='text-[10pt] text-gray-500'>
+                      {formatTimestampToHour(chat.timestamp)}
+                      {chat.role !== 'user' ? ` - ${chat.role}` : ''}
+                    </span>
                   </div>
                 </div>
               ))
@@ -125,6 +199,7 @@ export default function Chat({
             className='w-full md:max-w-[40rem] bg-accent p-5 border-white/15'
             type="text"
             placeholder="Message with NextAI"
+            onKeyUp={handleKeyUp}
           />
         </div>
       </div>

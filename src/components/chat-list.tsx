@@ -24,7 +24,7 @@ export default function ChatList({
   setChats: Dispatch<SetStateAction<ChatEntity[]>>,
   setIsSideBarOpen: Dispatch<SetStateAction<boolean>>,
   isSideBarOpen: boolean,
-  setCurrentChat: Dispatch<SetStateAction<MessageEntity[]>>
+  setCurrentChat: Dispatch<SetStateAction<ChatEntity | null>>
 }) {
 
   function handleCloseSidebar() {
@@ -72,7 +72,7 @@ export default function ChatList({
                 <div
                   key={i}
                   className="flex w-64 h-16 px-2 justify-between items-center hover:bg-secondary cursor-pointer"
-                  onClick={() => setCurrentChat(chat.messages)}
+                  onClick={() => setCurrentChat(chat)}
                 >
                   <span className='text-[10pt] overflow-hidden w-44'>{chat.name}</span>
                   <ChatDropdownMenu /> 
