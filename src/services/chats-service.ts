@@ -32,6 +32,23 @@ export default class ChatsServices {
     }
   }
 
+  async renameChat(chatId: string, newName: string): Promise<ChatEntity | null> {
+    try {
+      const response = await fetch(`${this.baseUrl}/chats/${chatId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newName }),
+      });
+      const data = await response.json();
+      return data as ChatEntity;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
   async getChatById(chatId: string): Promise<ChatEntity | null> {
     try {
       const response = await fetch(`${this.baseUrl}/chats/${chatId}`);
