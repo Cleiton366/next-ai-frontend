@@ -62,7 +62,22 @@ export default class ChatsServices {
 
   async deleteChat(chatId: string): Promise<void | null> {
     try {
-      const response = await fetch(`${this.baseUrl}/chats/${chatId}`, {
+      const response = await fetch(`${this.baseUrl}/chats/delete/${chatId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  async deleteAllChats(userId: string): Promise<void | null> {
+    try {
+      const response = await fetch(`${this.baseUrl}/chats/delete-all/${userId}`, {
         method: 'DELETE',
       });
       if (!response.ok) {

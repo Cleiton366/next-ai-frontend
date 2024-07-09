@@ -16,13 +16,15 @@ export function DAlertDialog({
   description,
   buttonName,
   action,
-  variant
+  variant,
+  disabled
 } :{
   tittle : string, 
   description : string, 
   buttonName : string,
-  action : () => void
-  variant : 'normal' | 'danger'
+  action : () => void,
+  variant : 'normal' | 'danger',
+  disabled? : boolean
 }) {
 
   function setButtonStyle () {
@@ -32,7 +34,7 @@ export function DAlertDialog({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className={setButtonStyle()}>{buttonName}</Button>
+        <Button disabled={disabled} className={setButtonStyle()}>{buttonName}</Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-zinc-900/95">
         <AlertDialogHeader>

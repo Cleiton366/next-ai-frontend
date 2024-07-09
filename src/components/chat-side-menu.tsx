@@ -12,12 +12,16 @@ export default function ChatSideMenu({
   setCurrentChat,
   setChatSideMenu,
   user,
+  archives,
+  setArchives
 }: {
   chats: ChatEntity[],
   setChats: Dispatch<SetStateAction<ChatEntity[]>>,
   setCurrentChat: Dispatch<SetStateAction<ChatEntity | null>>,
   setChatSideMenu: (value: boolean) => void,
   user: UserEntity | null,
+  archives: ChatEntity[],
+  setArchives: Dispatch<SetStateAction<ChatEntity[]>>
 }) {
 
   function handleSetCurrentChat(messages: ChatEntity) {
@@ -67,7 +71,10 @@ export default function ChatSideMenu({
             <UserDropdownMenu
               user={user}
               type='medium'
+              chats={chats}
               setChats={setChats}
+              archives={archives}
+              setArchives={setArchives}
             /> : null
         }
       </div>

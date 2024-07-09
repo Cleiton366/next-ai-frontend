@@ -1,4 +1,3 @@
-import User from "@/interfaces/user";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { MdLogout } from "react-icons/md";
@@ -11,12 +10,18 @@ import { Dispatch, SetStateAction } from "react";
 export default function UserDropdownMenu({
   user,
   type,
-  setChats
+  chats,
+  setChats,
+  archives,
+  setArchives
 }:
   {
     user: UserEntity,
     type: 'small' | 'medium',
+    chats: ChatEntity[],
     setChats: Dispatch<SetStateAction<ChatEntity[]>>,
+    archives: ChatEntity[],
+    setArchives: Dispatch<SetStateAction<ChatEntity[]>>
   }) {
 
   return (
@@ -32,12 +37,19 @@ export default function UserDropdownMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent className='bg-secondary w-48'>
         <DropdownMenuItem className='p-0' onSelect={(e) => e.preventDefault()}>
-          <Settings setChats={setChats} />
+          <Settings
+            chats={chats}
+            setChats={setChats}
+            archives={archives}
+            setArchives={setArchives}
+          />
         </DropdownMenuItem>
         <DropdownMenuItem className='p-0' onSelect={(e) => e.preventDefault()}>
           <Archives
             type='dropdown-item'
             setChats={setChats}
+            archives={archives}
+            setArchives={setArchives}
           />
         </DropdownMenuItem>
         <DropdownMenuItem className='p-0'>

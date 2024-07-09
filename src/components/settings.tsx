@@ -12,14 +12,97 @@ import { DAlertDialog } from "./alert-dialog"
 import { Archives } from "./archives"
 import { UserPreferences } from "./user-preferences"
 import { ChatEntity } from "@/entities/chat/chat-entity"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, use, useEffect, useState } from "react"
+import { useUser } from "@/contexts/user-context"
+import useToast from "@/util/use-toast"
+import ArchivesService from "@/services/archives-service"
+import ChatsServices from "@/services/chats-service"
+import { useRouter } from "next/navigation"
 
 export function Settings({
-  setChats
+  chats,
+  setChats,
+  archives,
+  setArchives,
 }: {
+  chats: ChatEntity[],
   setChats: Dispatch<SetStateAction<ChatEntity[]>>,
-}
-) {
+  archives: ChatEntity[],
+  setArchives: Dispatch<SetStateAction<ChatEntity[]>>,
+}) {
+  const archivesServices = new ArchivesService();
+  const chatsServices = new ChatsServices();
+  const { user, clearUser } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    getArchivesChat();
+  }, []);
+
+  useEffect(() => {
+    getArchivesChat();
+  }, [chats]);
+
+  async function getArchivesChat() {
+    try {
+      const chats = await archivesServices.getArchivesChat(user!.id);
+      if (!chats) {
+        useToast('Error', 'Failed to get archived chats');
+        return;
+      } else {
+        setArchives(chats);
+      }
+    } catch (error) {
+      useToast('Error', 'Failed to get archived chats');
+    }
+  }
+
+  async function handleDeleteAllChats() {
+    try {
+      await chatsServices.deleteAllChats(user!.id);
+      setChats([]);
+      useToast('Success', 'Chats deleted successfully');
+    } catch (error) {
+      useToast('Error', 'Failed to delete chats');
+    }
+  }
+
+  async function handleArchiveAllChats() {
+    try {
+      await archivesServices.archiveAllChats(user!.id);
+      setArchives([...archives, ...chats]);
+      setChats([]);
+      useToast('Success', 'Chats archived successfully');
+    } catch (error) {
+      useToast('Error', 'Failed to archive chats');
+    }
+  }
+
+  async function handleDeleteArchivedChats() {
+    try {
+      await archivesServices.deleteAllArchivedChats(user!.id);
+      setArchives([]);
+      useToast('Success', 'Archived chats deleted successfully');
+    } catch (error) {
+      useToast('Error', 'Failed to delete archived chats');
+    }
+  }
+
+  async function handleDeleteAccount() {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${user!.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      clearUser();
+      router.push('/');
+    } catch (error) {
+      useToast('Error', 'Failed to delete account');
+    }
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -47,6 +130,8 @@ export function Settings({
               <Archives
                 type="button"
                 setChats={setChats}
+                archives={archives}
+                setArchives={setArchives}
               />
             </div>
             <div className="flex justify-between items-center">
@@ -56,17 +141,8 @@ export function Settings({
                 description="Are you sure you want to archive all chats?"
                 buttonName="Archive All"
                 variant="normal"
-                action={() => console.log('Archieve all chats')}
-              />
-            </div>
-            <div className="flex justify-between items-center">
-              <DialogDescription>Delete archiveds chats</DialogDescription>
-              <DAlertDialog
-                tittle="Delete Archieved Chats"
-                description="Are you sure you want to delete all archived chats?"
-                buttonName="Delete All"
-                variant="danger"
-                action={() => console.log('Delete all archived chats')}
+                action={() => handleArchiveAllChats()}
+                disabled={chats.length === 0}
               />
             </div>
           </div>
@@ -74,13 +150,25 @@ export function Settings({
             <Separator />
             <h3 className="text-white">Danger Zone</h3>
             <div className="flex justify-between items-center">
+              <DialogDescription className="max-w-44 text-red-600 font-semibold">Delete archiveds chats</DialogDescription>
+              <DAlertDialog
+                tittle="Delete Archieved Chats"
+                description="Are you sure you want to delete all archived chats?"
+                buttonName="Delete All"
+                variant="danger"
+                action={() => handleDeleteArchivedChats()}
+                disabled={archives.length === 0}
+              />
+            </div>
+            <div className="flex justify-between items-center">
               <DialogDescription className="max-w-44 text-red-600 font-semibold">Delete all chats</DialogDescription>
               <DAlertDialog
                 tittle="Delete Chats"
                 description="Are you sure you want to delete all chats?"
                 buttonName="Delete All"
                 variant="danger"
-                action={() => console.log('Delete all chats')}
+                action={() => handleDeleteAllChats()}
+                disabled={chats.length === 0}
               />
             </div>
             <div className="flex justify-between items-center">
@@ -90,7 +178,7 @@ export function Settings({
                 description="Are you sure you want to delete your account and all data? This action is irreversible."
                 buttonName="Delete Account"
                 variant="danger"
-                action={() => console.log('Delete account')}
+                action={() => handleDeleteAccount()}
               />
             </div>
           </div>

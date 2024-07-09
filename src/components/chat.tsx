@@ -36,7 +36,9 @@ export default function Chat({
   isSideBarOpen,
   currentChat,
   setCurrentChat,
-  user
+  user,
+  archives,
+  setArchives
 }: {
   chats: ChatEntity[],
   setChats: Dispatch<SetStateAction<ChatEntity[]>>,
@@ -44,7 +46,9 @@ export default function Chat({
   isSideBarOpen: boolean,
   currentChat: ChatEntity | null,
   setCurrentChat: Dispatch<SetStateAction<ChatEntity | null>>,
-  user: UserEntity | null
+  user: UserEntity | null,
+  archives: ChatEntity[],
+  setArchives: Dispatch<SetStateAction<ChatEntity[]>>
 }) {
   const [chatSideMenu, setChatSideMenu] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState<boolean>(false);
@@ -154,6 +158,8 @@ export default function Chat({
           setChats={setChats}
           setChatSideMenu={setChatSideMenu}
           setCurrentChat={setCurrentChat}
+          archives={archives}
+          setArchives={setArchives}
         /> : null}
       <div className='flex flex-col w-full'>
         <div
@@ -172,7 +178,10 @@ export default function Chat({
                     <UserDropdownMenu
                       user={user}
                       type='small'
+                      chats={chats}
                       setChats={setChats}
+                      archives={archives}
+                      setArchives={setArchives}
                     /> : null
                 }
               </div>

@@ -20,13 +20,16 @@ import ChatsServices from "@/services/chats-service";
 
 export function Archives({
   type,
-  setChats
+  setChats,
+  archives,
+  setArchives
 }: {
   type: 'dropdown-item' | 'button'
   setChats: Dispatch<SetStateAction<ChatEntity[]>>,
+  archives: ChatEntity[],
+  setArchives: Dispatch<SetStateAction<ChatEntity[]>>
 }) {
 
-  const [archives, setArchives] = useState<ChatEntity[]>([]);
   const archivesService = new ArchivesService();
   const chatsService = new ChatsServices();
   const { user } = useUser();
