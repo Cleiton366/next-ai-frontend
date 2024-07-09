@@ -4,16 +4,18 @@ import { ChatAlertDialog } from "./chat-alert-dialog";
 import { RenameChatDialog } from "./rename-chat-dialog";
 import { ChatEntity } from "@/entities/chat/chat-entity";
 import ChatsServices from "@/services/chats-service";
-import { Dispatch, SetStateAction, use, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 import useToast from "@/util/use-toast";
 import { useUser } from "@/contexts/user-context";
 
 
 export default function ChatDropdownMenu({
   chat,
+  setCurrentChat,
   setChats
 }: {
   chat: ChatEntity,
+  setCurrentChat: Dispatch<SetStateAction<ChatEntity | null>>,
   setChats: Dispatch<SetStateAction<ChatEntity[]>>,
 }) {
   const chatsServices = new ChatsServices();
@@ -26,6 +28,7 @@ export default function ChatDropdownMenu({
       return;
     } else {
       setChats(chats);
+      setCurrentChat(null);
     }
   }
 

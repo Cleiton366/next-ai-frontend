@@ -70,6 +70,7 @@ export default function ChatList({
                   <span className='text-[10pt] overflow-hidden w-44'>{chat.name}</span>
                   <ChatDropdownMenu
                     chat={chat}
+                    setCurrentChat={setCurrentChat}
                     setChats={setChats}
                   />
                 </div>

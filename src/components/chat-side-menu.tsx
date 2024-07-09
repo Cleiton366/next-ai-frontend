@@ -52,6 +52,7 @@ export default function ChatSideMenu({
                 </div>
                 <ChatDropdownMenu
                   chat={chat}
+                  setCurrentChat={setCurrentChat}
                   setChats={setChats}
                 />
               </div>
