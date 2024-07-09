@@ -29,13 +29,6 @@ export default function Home() {
               <FaGoogle className='md:h-5 md:w-5 mr-2' />
               <span className='text-[8pt] md:text[14pt]'>Sign in with Google</span>
             </Button>
-            <Separator className="md:h-10" orientation="vertical" />
-            <Button 
-              className='bg-gradient-to-r from-blue-950 via-accent to-purple-950 border-[0.1rem] w-40 border-none'
-              onClick={() => router.push('/demo')}
-            >
-              <span className='text[14pt]'>View Demo</span>
-            </Button>
           </div>
         </div>
       </div>
