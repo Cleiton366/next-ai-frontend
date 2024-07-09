@@ -5,14 +5,18 @@ import { MdLogout } from "react-icons/md";
 import { Settings } from "./settings";
 import { Archives } from "./archives";
 import { UserEntity } from "@/entities/user/user-entity";
+import { ChatEntity } from "@/entities/chat/chat-entity";
+import { Dispatch, SetStateAction } from "react";
 
 export default function UserDropdownMenu({
   user,
-  type
+  type,
+  setChats
 }:
   {
     user: UserEntity,
-    type: 'small' | 'medium'
+    type: 'small' | 'medium',
+    setChats: Dispatch<SetStateAction<ChatEntity[]>>,
   }) {
 
   return (
@@ -28,10 +32,13 @@ export default function UserDropdownMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent className='bg-secondary w-48'>
         <DropdownMenuItem className='p-0' onSelect={(e) => e.preventDefault()}>
-          <Settings />
+          <Settings setChats={setChats} />
         </DropdownMenuItem>
         <DropdownMenuItem className='p-0' onSelect={(e) => e.preventDefault()}>
-          <Archives type='dropdown-item' />
+          <Archives
+            type='dropdown-item'
+            setChats={setChats}
+          />
         </DropdownMenuItem>
         <DropdownMenuItem className='p-0'>
           <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>

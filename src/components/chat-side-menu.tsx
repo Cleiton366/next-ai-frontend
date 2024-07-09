@@ -62,7 +62,12 @@ export default function ChatSideMenu({
           }
         </div>
         {
-          user ? <UserDropdownMenu user={user} type='medium' /> : null
+          user ?
+            <UserDropdownMenu
+              user={user}
+              type='medium'
+              setChats={setChats}
+            /> : null
         }
       </div>
       <div className='flex grow bg-black/80' />

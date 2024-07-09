@@ -11,8 +11,15 @@ import { Separator } from "./ui/separator"
 import { DAlertDialog } from "./alert-dialog"
 import { Archives } from "./archives"
 import { UserPreferences } from "./user-preferences"
+import { ChatEntity } from "@/entities/chat/chat-entity"
+import { Dispatch, SetStateAction } from "react"
 
-export function Settings() {
+export function Settings({
+  setChats
+}: {
+  setChats: Dispatch<SetStateAction<ChatEntity[]>>,
+}
+) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -37,7 +44,10 @@ export function Settings() {
             <h3 className="text-white">Archieves</h3>
             <div className="flex justify-between items-center">
               <DialogDescription>View Archived Chats</DialogDescription>
-              <Archives type="button" />
+              <Archives
+                type="button"
+                setChats={setChats}
+              />
             </div>
             <div className="flex justify-between items-center">
               <DialogDescription>Archive all chats</DialogDescription>

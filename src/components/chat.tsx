@@ -168,7 +168,12 @@ export default function Chat({
               </div>
               <div>
                 {
-                  user ? <UserDropdownMenu user={user} type='small' /> : null
+                  user ?
+                    <UserDropdownMenu
+                      user={user}
+                      type='small'
+                      setChats={setChats}
+                    /> : null
                 }
               </div>
             </div>
@@ -195,9 +200,9 @@ export default function Chat({
                       ${chat.role === 'user' ? 'bg-secondary' : 'bg-accent'}`}>
                             {
                               chat.role === 'user' ?
-                              <span className='text-[8pt] md:text-[10pt] break-words whitespace-normal'>{chat.message}</span>
-                              :
-                              <span dangerouslySetInnerHTML={getMarkdownText(chat.message)} className="text-[8pt] md:text-[10pt]"/>
+                                <span className='text-[8pt] md:text-[10pt] break-words whitespace-normal'>{chat.message}</span>
+                                :
+                                <span dangerouslySetInnerHTML={getMarkdownText(chat.message)} className="text-[8pt] md:text-[10pt]" />
                             }
                           </div>
                         </div>
