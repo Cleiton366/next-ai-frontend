@@ -67,4 +67,40 @@ export default class ArchivesService {
       return null;
     }
   }
+
+  async deleteChat(chatId: string): Promise<void | null> {
+    try {
+      const response = await fetch(`${this.baseUrl}/archives/delete/${chatId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  async deleteAllArchivedChats(userId: string): Promise<void | null> {
+    try {
+      const response = await fetch(`${this.baseUrl}/archives/delete-all/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 }
