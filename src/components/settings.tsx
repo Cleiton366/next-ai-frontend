@@ -19,20 +19,10 @@ import ArchivesService from "@/services/archives-service"
 import ChatsServices from "@/services/chats-service"
 import { useRouter } from "next/navigation"
 
-export function Settings({
-  chats,
-  setChats,
-  archives,
-  setArchives,
-}: {
-  chats: ChatEntity[],
-  setChats: Dispatch<SetStateAction<ChatEntity[]>>,
-  archives: ChatEntity[],
-  setArchives: Dispatch<SetStateAction<ChatEntity[]>>,
-}) {
+export function Settings() {
   const archivesServices = new ArchivesService();
   const chatsServices = new ChatsServices();
-  const { user, clearUser } = useUser();
+  const { user, clearUser, setArchives, chats, setChats, archives } = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -127,12 +117,7 @@ export function Settings({
             <h3 className="text-white">Archieves</h3>
             <div className="flex justify-between items-center">
               <DialogDescription>View Archived Chats</DialogDescription>
-              <Archives
-                type="button"
-                setChats={setChats}
-                archives={archives}
-                setArchives={setArchives}
-              />
+              <Archives type="button" />
             </div>
             <div className="flex justify-between items-center">
               <DialogDescription>Archive all chats</DialogDescription>

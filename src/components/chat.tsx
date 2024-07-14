@@ -1,4 +1,4 @@
-import { Dispatch, LegacyRef, SetStateAction, use, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Input } from './ui/input'
 import { BiMenuAltLeft } from "react-icons/bi";
 import { TbMessagePlus } from 'react-icons/tb'
@@ -8,7 +8,6 @@ import DropDownMenu from './models-dropdown-menu'
 import UserDropdownMenu from './user-dropdown-menu';
 import { ChatEntity } from '@/entities/chat/chat-entity';
 import MessageEntity from '@/entities/message/message-entity';
-import { UserEntity } from '@/entities/user/user-entity';
 import MessagesService from '@/services/messages-service';
 import ChatsServices from '@/services/chats-service';
 import { useRef } from 'react';
@@ -16,6 +15,7 @@ import useToast from '@/util/use-toast';
 import { ScrollArea } from './ui/scroll-area';
 import { CircularProgress } from '@mui/material';
 import { marked } from "marked";
+import { useUser } from '@/contexts/user-context';
 
 type message = {
   role: string,
@@ -30,31 +30,24 @@ type Chat = {
 }
 
 export default function Chat({
-  chats,
-  setChats,
   setIsSideBarOpen,
   isSideBarOpen,
-  currentChat,
-  setCurrentChat,
-  user,
-  archives,
-  setArchives
 }: {
-  chats: ChatEntity[],
-  setChats: Dispatch<SetStateAction<ChatEntity[]>>,
   setIsSideBarOpen: Dispatch<SetStateAction<boolean>>,
   isSideBarOpen: boolean,
-  currentChat: ChatEntity | null,
-  setCurrentChat: Dispatch<SetStateAction<ChatEntity | null>>,
-  user: UserEntity | null,
-  archives: ChatEntity[],
-  setArchives: Dispatch<SetStateAction<ChatEntity[]>>
 }) {
   const [chatSideMenu, setChatSideMenu] = useState<boolean>(false);
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const messagesServices = new MessagesService();
   const chatsServices = new ChatsServices();
   var chatContainerRef = useRef<HTMLDivElement>(null);
+  const {
+    user,
+    currentChat,
+    setCurrentChat,
+    chats,
+    setChats,
+  } = useUser();
 
   useEffect(() => {
     if (currentChat?.messages) {
@@ -152,15 +145,7 @@ export default function Chat({
   return (
     <div className={`flex relative w-full min-h-svh ${chatSideMenu ? 'overflow-hidden' : ''}`}>
       {chatSideMenu ?
-        <ChatSideMenu
-          user={user}
-          chats={chats}
-          setChats={setChats}
-          setChatSideMenu={setChatSideMenu}
-          setCurrentChat={setCurrentChat}
-          archives={archives}
-          setArchives={setArchives}
-        /> : null}
+        <ChatSideMenu setChatSideMenu={setChatSideMenu} /> : null}
       <div className='flex flex-col w-full'>
         <div
           className={`bg-primary px-5 md:px-10 py-5 shadow-lg shadow-cyan-500/15 top-0
@@ -175,14 +160,7 @@ export default function Chat({
               <div>
                 {
                   user ?
-                    <UserDropdownMenu
-                      user={user}
-                      type='small'
-                      chats={chats}
-                      setChats={setChats}
-                      archives={archives}
-                      setArchives={setArchives}
-                    /> : null
+                    <UserDropdownMenu type='small' /> : null
                 }
               </div>
             </div>

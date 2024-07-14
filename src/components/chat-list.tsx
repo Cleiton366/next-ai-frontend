@@ -4,22 +4,17 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/t
 import { Dispatch, SetStateAction } from 'react';
 import { Button } from './ui/button';
 import ChatDropdownMenu from './chat-dropdown-menu';
-import { ChatEntity } from '@/entities/chat/chat-entity';
+import { useUser } from "@/contexts/user-context";
 
 export default function ChatList({
-  chats,
-  setChats,
   setIsSideBarOpen,
   isSideBarOpen,
-  setCurrentChat
 }: {
-  chats: ChatEntity[],
-  setChats: Dispatch<SetStateAction<ChatEntity[]>>,
   setIsSideBarOpen: Dispatch<SetStateAction<boolean>>,
   isSideBarOpen: boolean,
-  setCurrentChat: Dispatch<SetStateAction<ChatEntity | null>>
 }) {
-
+  const { chats, setCurrentChat } = useUser();
+  
   function handleCloseSidebar() {
     setIsSideBarOpen(false);
   }
@@ -68,11 +63,7 @@ export default function ChatList({
                   onClick={() => setCurrentChat(chat)}
                 >
                   <span className='text-[10pt] overflow-hidden w-44'>{chat.name}</span>
-                  <ChatDropdownMenu
-                    chat={chat}
-                    setCurrentChat={setCurrentChat}
-                    setChats={setChats}
-                  />
+                  <ChatDropdownMenu chat={chat}/>
                 </div>
               ))
               :

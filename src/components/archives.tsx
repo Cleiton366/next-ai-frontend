@@ -15,24 +15,17 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useUser } from "@/contexts/user-context";
 import useToast from "@/util/use-toast";
 import ArchivesService from "@/services/archives-service";
-import { ChatEntity } from "@/entities/chat/chat-entity";
 import ChatsServices from "@/services/chats-service";
 
 export function Archives({
   type,
-  setChats,
-  archives,
-  setArchives
 }: {
   type: 'dropdown-item' | 'button'
-  setChats: Dispatch<SetStateAction<ChatEntity[]>>,
-  archives: ChatEntity[],
-  setArchives: Dispatch<SetStateAction<ChatEntity[]>>
 }) {
 
   const archivesService = new ArchivesService();
   const chatsService = new ChatsServices();
-  const { user } = useUser();
+  const { user, archives, setArchives, setChats } = useUser();
 
   useEffect(() => {
     getArchivesChat();

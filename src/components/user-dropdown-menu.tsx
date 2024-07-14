@@ -3,54 +3,34 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { MdLogout } from "react-icons/md";
 import { Settings } from "./settings";
 import { Archives } from "./archives";
-import { UserEntity } from "@/entities/user/user-entity";
-import { ChatEntity } from "@/entities/chat/chat-entity";
-import { Dispatch, SetStateAction } from "react";
+import { useUser } from "@/contexts/user-context";
 
 export default function UserDropdownMenu({
-  user,
   type,
-  chats,
-  setChats,
-  archives,
-  setArchives
 }:
   {
-    user: UserEntity,
     type: 'small' | 'medium',
-    chats: ChatEntity[],
-    setChats: Dispatch<SetStateAction<ChatEntity[]>>,
-    archives: ChatEntity[],
-    setArchives: Dispatch<SetStateAction<ChatEntity[]>>
   }) {
+
+  const { user } = useUser();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex w-fit items-center gap-1" asChild>
         <div className={`cursor-pointer w-fit ${type === 'medium' ? 'flex flex-row gap-2 p-5 items-center' : ''}`}>
           <Avatar>
-            <AvatarImage src={user.profilePicture} alt="User Picture" />
+            <AvatarImage src={user!.profilePicture} alt="User Picture" />
             <AvatarFallback>USER</AvatarFallback>
           </Avatar>
-          {type === 'medium' ? <span>{user.name}</span> : null}
+          {type === 'medium' ? <span>{user!.name}</span> : null}
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='bg-secondary w-48'>
         <DropdownMenuItem className='p-0' onSelect={(e) => e.preventDefault()}>
-          <Settings
-            chats={chats}
-            setChats={setChats}
-            archives={archives}
-            setArchives={setArchives}
-          />
+          <Settings />
         </DropdownMenuItem>
         <DropdownMenuItem className='p-0' onSelect={(e) => e.preventDefault()}>
-          <Archives
-            type='dropdown-item'
-            setChats={setChats}
-            archives={archives}
-            setArchives={setArchives}
-          />
+          <Archives type='dropdown-item'/>
         </DropdownMenuItem>
         <DropdownMenuItem className='p-0'>
           <div className='w-full flex justify-between items-center text-white p-2 px-3 rounded-sm cursor-pointer hover:bg-white hover:text-black'>

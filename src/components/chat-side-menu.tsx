@@ -2,27 +2,15 @@ import { TbMessagePlus } from "react-icons/tb";
 import { BiMenuAltRight } from "react-icons/bi";
 import UserDropdownMenu from './user-dropdown-menu';
 import ChatDropdownMenu from './chat-dropdown-menu';
-import { UserEntity } from '@/entities/user/user-entity';
 import { ChatEntity } from '@/entities/chat/chat-entity';
-import { Dispatch, SetStateAction } from 'react';
+import { useUser } from "@/contexts/user-context";
 
 export default function ChatSideMenu({
-  chats,
-  setChats,
-  setCurrentChat,
   setChatSideMenu,
-  user,
-  archives,
-  setArchives
 }: {
-  chats: ChatEntity[],
-  setChats: Dispatch<SetStateAction<ChatEntity[]>>,
-  setCurrentChat: Dispatch<SetStateAction<ChatEntity | null>>,
   setChatSideMenu: (value: boolean) => void,
-  user: UserEntity | null,
-  archives: ChatEntity[],
-  setArchives: Dispatch<SetStateAction<ChatEntity[]>>
 }) {
+  const { user, setCurrentChat, chats } = useUser();
 
   function handleSetCurrentChat(messages: ChatEntity) {
     setCurrentChat(messages);
@@ -56,8 +44,6 @@ export default function ChatSideMenu({
                 </div>
                 <ChatDropdownMenu
                   chat={chat}
-                  setCurrentChat={setCurrentChat}
-                  setChats={setChats}
                 />
               </div>
             )) :
@@ -68,14 +54,7 @@ export default function ChatSideMenu({
         </div>
         {
           user ?
-            <UserDropdownMenu
-              user={user}
-              type='medium'
-              chats={chats}
-              setChats={setChats}
-              archives={archives}
-              setArchives={setArchives}
-            /> : null
+            <UserDropdownMenu type='medium' /> : null
         }
       </div>
       <div className='flex grow bg-black/80' />

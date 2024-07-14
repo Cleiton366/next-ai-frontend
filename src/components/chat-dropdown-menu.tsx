@@ -11,15 +11,11 @@ import { useUser } from "@/contexts/user-context";
 
 export default function ChatDropdownMenu({
   chat,
-  setCurrentChat,
-  setChats
 }: {
   chat: ChatEntity,
-  setCurrentChat: Dispatch<SetStateAction<ChatEntity | null>>,
-  setChats: Dispatch<SetStateAction<ChatEntity[]>>,
 }) {
   const chatsServices = new ChatsServices();
-  const { user } = useUser();
+  const { user, setChats, setCurrentChat } = useUser();
 
   async function updateChat() {
     const chats = await chatsServices.getChats(user!.id);
