@@ -3,13 +3,13 @@ import { ChatEntity } from '@/entities/chat/chat-entity';
 import { UserEntity } from '@/entities/user/user-entity';
 import ArchivesService from '@/services/archives-service';
 import ChatsServices from '@/services/chats-service';
+import UserService from '@/services/user-service';
 import { createContext, useState, useEffect, useContext } from 'react';
 
 type UserContextType = {
   user: UserEntity | null;
   setUser: (user: UserEntity | null) => void;
-  getUser: () => UserEntity | null;
-  loadUser: () => void;
+  getUser: () => Promise<UserEntity | null>;
   clearUser: () => void;
   fetchChats: () => void;
   chats: ChatEntity[];
@@ -26,8 +26,7 @@ const UserContext = createContext<UserContextType>({
   archives: [],
   currentChat: null,
   setUser: () => { },
-  getUser: () => { return null },
-  loadUser: () => { },
+  getUser: async () => null,
   clearUser: () => { },
   fetchChats: () => { },
   setChats: () => { },
@@ -38,23 +37,19 @@ const UserContext = createContext<UserContextType>({
 const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const chatsServices = new ChatsServices();
   const archivesService = new ArchivesService();
+  const userService = new UserService();
 
   const [user, setUser] = useState<UserEntity | null>(null);
   const [chats, setChats] = useState<ChatEntity[]>([]);
   const [archives, setArchives] = useState<ChatEntity[]>([]);
   const [currentChat, setCurrentChat] = useState<ChatEntity | null>(null);
 
-  const loadUser = () => {
+  async function getUser(): Promise<UserEntity | null> {
     const storedUser = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  };
-
-  function getUser(): UserEntity | null {
-    const storedUser = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
-    if (storedUser) {
-      return JSON.parse(storedUser) as UserEntity;
+      const userData = JSON.parse(storedUser) as UserEntity;
+      const user = await userService.getUser(userData.id);
+      return user;
     }
     return null;
   }
@@ -76,7 +71,13 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   };
 
   useEffect(() => {
-    loadUser();
+    const fetchUser = async () => {
+      const user = await getUser();
+      if (user) {
+        setUser(user);
+      }
+    }
+    fetchUser();
   }, []);
 
   useEffect(() => {
@@ -90,7 +91,6 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
       user,
       setUser,
       getUser,
-      loadUser,
       clearUser,
       fetchChats,
       chats,

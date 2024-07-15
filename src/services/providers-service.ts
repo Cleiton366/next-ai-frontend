@@ -1,7 +1,7 @@
 import { CreateProviderDto } from "@/dtos/provider/create-provider.dto";
 import { UpdateProviderDto } from "@/dtos/provider/update-provider.dto";
 import { ProviderEntity } from "@/entities/provider/provider-entity";
-import { ProvidersListEntity } from "@/entities/provider/providers-models-entity";
+import { ProvidersModelsEntity } from "@/entities/provider/providers-models-entity";
 
 export default class ProvidersService {
   private readonly baseUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -18,11 +18,11 @@ export default class ProvidersService {
   }
 
 
-  async getProvidersModels(): Promise<ProvidersListEntity[] | null> {
+  async getProvidersModels(): Promise<ProvidersModelsEntity[] | null> {
     try {
       const response = await fetch(`${this.baseUrl}/providers`);
       const data = await response.json();
-      return data as ProvidersListEntity[];
+      return data as ProvidersModelsEntity[];
     } catch (error) {
       console.log(error);
       return null;

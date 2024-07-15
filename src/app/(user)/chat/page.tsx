@@ -14,12 +14,16 @@ export default function Home() {
   } = useUser();
 
   useEffect(() => {
-    if (!user) {
-      const newUserObj = getUser();
-      if (newUserObj) {
-        setUser(newUserObj);
+    const fetchUser = async () => {
+      if (!user) {
+        const newUserObj = await getUser();
+        if (newUserObj) {
+          setUser(newUserObj);
+        }
       }
     }
+
+    fetchUser();
   }, []);
 
   useEffect(() => {

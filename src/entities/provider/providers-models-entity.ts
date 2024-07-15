@@ -1,10 +1,6 @@
+import { Model } from "./models-entity";
 
-interface model {
-  id: string;
-  name: string;
-}
-
-export class ProvidersListEntity {
+export class ProvidersModelsEntity {
   id!: string;
 
   name!: string;
@@ -13,5 +9,5 @@ export class ProvidersListEntity {
 
   documentationUrl!: string;
 
-  models!: model[];
+  models!: Model[];
 }
