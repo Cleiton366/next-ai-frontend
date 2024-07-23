@@ -137,7 +137,7 @@ export default function Chat({
     return role === 'user' ? 'self-end' : 'self-start'
   }
 
-   return (
+  return (
     <div className={`flex relative w-full min-h-svh ${chatSideMenu ? 'overflow-hidden' : ''}`}>
       {chatSideMenu ?
         <ChatSideMenu setChatSideMenu={setChatSideMenu} /> : null}
@@ -168,60 +168,119 @@ export default function Chat({
         </div>
         <div className="flex h-full md:h-[44rem] lg:h-[45rem] overflow-y-scroll scroll-smooth p-5 md:p-10 justify-center">
           <div className="flex flex-col w-full max-w-5xl">
-            <ScrollArea className='px-5'>
-              <div ref={chatContainerRef}>
-                {
-                  currentChat?.messages.map((chat, i: number) => (
-                    <div
-                      key={i}
-                      className='flex flex-col'
-                    >
-                      <div className={`my-2 ${setMessageStyle(chat.role)}`}>
-                        <div className="max-w-[40rem]">
-                          <div className={`px-3 py-2 rounded-lg 
+            {
+              chatSideMenu ?
+                (
+                  <div ref={chatContainerRef}>
+                    {
+                      currentChat?.messages.map((chat, i: number) => (
+                        <div
+                          key={i}
+                          className='flex flex-col'
+                        >
+                          <div className={`my-2 ${setMessageStyle(chat.role)}`}>
+                            <div className="max-w-[40rem]">
+                              <div className={`px-3 py-2 rounded-lg 
                       ${chat.role === 'user' ? 'bg-secondary' : 'bg-accent'}`}>
-                            {
-                              chat.role === 'user' ?
-                                <span className='text-[8pt] md:text-[10pt] break-words whitespace-normal'>{chat.message}</span>
-                                :
-                                <span className="text-[8pt] md:text-[10pt]" >
-                                  <Markdown >{chat.message}</Markdown>
-                                </span>
-                            }
+                                {
+                                  chat.role === 'user' ?
+                                    <span className='text-[8pt] md:text-[10pt] break-words whitespace-normal'>{chat.message}</span>
+                                    :
+                                    <span className="text-[8pt] md:text-[10pt]" >
+                                      <Markdown >{chat.message}</Markdown>
+                                    </span>
+                                }
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            className={`flex w-full pt-3 justify-center 
+                    ${chat.role === 'user' ? 'md:justify-end' : 'md:justify-start'}`}
+                          >
+                            <span className='text-[10pt] text-gray-500'>
+                              {formatTimestampToHour(chat.timestamp)}
+                              {chat.role !== 'user' ? ` - ${chat.role}` : ''}
+                            </span>
                           </div>
                         </div>
-                      </div>
-                      <div
-                        className={`flex w-full pt-3 justify-center 
+                      ))
+                    }
+                    {
+                      isTyping ?
+                        (
+                          <div className='flex py-10'>
+                            <div className='flex w-full justify-center items-center gap-3'>
+                              <span className='text-gray-500/90'>Generating response</span>
+                              <CircularProgress
+                                size={15}
+                                sx={{
+                                  "& .MuiCircularProgress-circle": {
+                                    "color": "gray",
+                                  },
+                                }} />
+                            </div>
+                          </div>
+                        ) : null
+                    }
+                  </div>
+                ) :
+                (
+                  <ScrollArea className='px-5'>
+                    <div ref={chatContainerRef}>
+                      {
+                        currentChat?.messages.map((chat, i: number) => (
+                          <div
+                            key={i}
+                            className='flex flex-col'
+                          >
+                            <div className={`my-2 ${setMessageStyle(chat.role)}`}>
+                              <div className="max-w-[40rem]">
+                                <div className={`px-3 py-2 rounded-lg 
+                      ${chat.role === 'user' ? 'bg-secondary' : 'bg-accent'}`}>
+                                  {
+                                    chat.role === 'user' ?
+                                      <span className='text-[8pt] md:text-[10pt] break-words whitespace-normal'>{chat.message}</span>
+                                      :
+                                      <span className="text-[8pt] md:text-[10pt]" >
+                                        <Markdown >{chat.message}</Markdown>
+                                      </span>
+                                  }
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              className={`flex w-full pt-3 justify-center 
                     ${chat.role === 'user' ? 'md:justify-end' : 'md:justify-start'}`}
-                      >
-                        <span className='text-[10pt] text-gray-500'>
-                          {formatTimestampToHour(chat.timestamp)}
-                          {chat.role !== 'user' ? ` - ${chat.role}` : ''}
-                        </span>
-                      </div>
+                            >
+                              <span className='text-[10pt] text-gray-500'>
+                                {formatTimestampToHour(chat.timestamp)}
+                                {chat.role !== 'user' ? ` - ${chat.role}` : ''}
+                              </span>
+                            </div>
+                          </div>
+                        ))
+                      }
+                      {
+                        isTyping ?
+                          (
+                            <div className='flex py-10'>
+                              <div className='flex w-full justify-center items-center gap-3'>
+                                <span className='text-gray-500/90'>Generating response</span>
+                                <CircularProgress
+                                  size={15}
+                                  sx={{
+                                    "& .MuiCircularProgress-circle": {
+                                      "color": "gray",
+                                    },
+                                  }} />
+                              </div>
+                            </div>
+                          ) : null
+                      }
                     </div>
-                  ))
-                }
-                {
-                  isTyping ?
-                    (
-                      <div className='flex py-10'>
-                        <div className='flex w-full justify-center items-center gap-3'>
-                          <span className='text-gray-500/90'>Generating response</span>
-                          <CircularProgress
-                            size={15}
-                            sx={{
-                              "& .MuiCircularProgress-circle": {
-                                "color": "gray",
-                              },
-                            }} />
-                        </div>
-                      </div>
-                    ) : null
-                }
-              </div>
-            </ScrollArea>
+                  </ScrollArea>
+                )
+            }
           </div>
         </div>
         <div
