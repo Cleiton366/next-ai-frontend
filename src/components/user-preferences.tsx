@@ -57,6 +57,9 @@ export function UserPreferences() {
     if (defaultSource === 'api-key' && APIs.length > 0) {
       fetchData();
     }
+    if(defaultSource === 'api-key' && APIs.length === 0) {
+      handleSetDefaultSource('server');
+    }
   }, [APIs]);
 
   useEffect(() => {
