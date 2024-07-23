@@ -31,7 +31,7 @@ export default function Home() {
   }, [user]);
 
   return (
-    <main className="flex min-h-screen flex-row justify-between bg-zinc-900" >
+    <main className="flex h-svh flex-row justify-between bg-zinc-900" >
       <ChatList
         setIsSideBarOpen={setIsSideBarOpen}
         isSideBarOpen={isSideBarOpen}
