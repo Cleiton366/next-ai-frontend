@@ -8,12 +8,9 @@ import { Model } from "@/entities/provider/models-entity";
 import { UpdateUsersPreferenceDto } from "@/dtos/user-preferences/update-user-preferences-dto";
 
 export default function ModelsDropDownMenu() {
-  const [defaultProvider, setDefaultProvider] = useState('');
-  const [defaultModel, setDefaultModel] = useState('');
-  const [models, setModels] = useState<Model[]>([]);
   const userPreferencesServices = new UserPreferencesServices();
   const providersServices = new ProvidersService();
-  const { user, setUser, getUser } = useUser();
+  const { user, setUser, getUser, models, setModels, defaultModel, setDefaultModel, setDefaultProvider, defaultProvider } = useUser();
 
   useEffect(() => {
     if (user) {
@@ -37,11 +34,11 @@ export default function ModelsDropDownMenu() {
     }
   }, [user]);
 
-  async function handleModelChange(model : string) {
+  async function handleModelChange(model: string) {
     setDefaultModel(model);
-    const updatePreferences : UpdateUsersPreferenceDto = {
-      defaultModel : model,
-      defaultProvider : defaultProvider
+    const updatePreferences: UpdateUsersPreferenceDto = {
+      defaultModel: model,
+      defaultProvider: defaultProvider
     }
     try {
       await userPreferencesServices.updatePreferences(user!.preferences.id, updatePreferences);

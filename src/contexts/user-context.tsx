@@ -1,5 +1,7 @@
 'use client'
 import { ChatEntity } from '@/entities/chat/chat-entity';
+import { Model } from '@/entities/provider/models-entity';
+import { ProviderEntity } from '@/entities/provider/provider-entity';
 import { UserEntity } from '@/entities/user/user-entity';
 import ArchivesService from '@/services/archives-service';
 import ChatsServices from '@/services/chats-service';
@@ -15,9 +17,17 @@ type UserContextType = {
   chats: ChatEntity[];
   archives: ChatEntity[];
   currentChat: ChatEntity | null;
+  models: Model[];
+  defaultModel: string;
+  defaultProvider: string;
+  APIs: ProviderEntity[];
   setChats: (chats: ChatEntity[]) => void;
   setArchives: (chats: ChatEntity[]) => void;
   setCurrentChat: (chat: ChatEntity | null) => void;
+  setModels: (models: Model[]) => void;
+  setDefaultModel: (model: string) => void;
+  setDefaultProvider: (provider: string) => void;
+  setAPIs: (apis: ProviderEntity[]) => void;
 };
 
 const UserContext = createContext<UserContextType>({
@@ -25,6 +35,10 @@ const UserContext = createContext<UserContextType>({
   chats: [],
   archives: [],
   currentChat: null,
+  models: [],
+  defaultModel: '',
+  defaultProvider: '',
+  APIs: [],
   setUser: () => { },
   getUser: async () => null,
   clearUser: () => { },
@@ -32,6 +46,10 @@ const UserContext = createContext<UserContextType>({
   setChats: () => { },
   setArchives: () => { },
   setCurrentChat: () => { },
+  setModels: () => { },
+  setDefaultModel: () => { },
+  setDefaultProvider: () => { },
+  setAPIs: () => { }
 });
 
 const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -43,6 +61,10 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   const [chats, setChats] = useState<ChatEntity[]>([]);
   const [archives, setArchives] = useState<ChatEntity[]>([]);
   const [currentChat, setCurrentChat] = useState<ChatEntity | null>(null);
+  const [models, setModels] = useState<Model[]>([]);
+  const [defaultModel, setDefaultModel] = useState('');
+  const [defaultProvider, setDefaultProvider] = useState('');
+  const [APIs, setAPIs] = useState<ProviderEntity[]>([]);
 
   async function getUser(): Promise<UserEntity | null> {
     const storedUser = typeof window !== 'undefined' ? localStorage.getItem('user') : null;
@@ -94,11 +116,19 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
       clearUser,
       fetchChats,
       chats,
+      models,
+      defaultModel,
+      defaultProvider,
+      APIs,
       archives,
       currentChat,
       setChats,
       setArchives,
-      setCurrentChat
+      setCurrentChat,
+      setModels,
+      setDefaultModel,
+      setDefaultProvider,
+      setAPIs
     }}>
       {children}
     </UserContext.Provider>
