@@ -120,6 +120,10 @@ export default function Chat({
     }
   };
 
+  function newChat() {
+    setCurrentChat(null);
+  }
+
   function formatTimestampToHour(timestamp: Date) {
     const date = new Date(timestamp);
     return date.toLocaleTimeString('en-US', {
@@ -163,7 +167,7 @@ export default function Chat({
           <div className='flex justify-between items-center md:hidden'>
             <BiMenuAltLeft onClick={() => setChatSideMenu(true)} className='h-6 w-6 cursor-pointer' />
             <DropDownMenu />
-            <TbMessagePlus className='h-6 w-6 cursor-pointer' />
+            <TbMessagePlus onClick={newChat} className='h-6 w-6 cursor-pointer' />
           </div>
         </div>
         <div className="flex h-full md:h-[44rem] lg:h-[45rem] overflow-y-scroll scroll-smooth p-5 md:p-10 justify-center">

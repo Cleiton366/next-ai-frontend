@@ -19,9 +19,11 @@ export default function ChatList({
     setIsSideBarOpen(false);
   }
 
-  function handleNewChat() {
-
+  function newChat() {
+    setCurrentChat(null);
+    setIsSideBarOpen(false);
   }
+
 
   return (
     isSideBarOpen &&
@@ -45,7 +47,7 @@ export default function ChatList({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button className='p-0 h-fit' onClick={handleCloseSidebar}>
-                    <TbMessagePlus className='h-6 w-6' />
+                    <TbMessagePlus onClick={newChat} className='h-6 w-6' />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent className='bg-secondary text-white'>

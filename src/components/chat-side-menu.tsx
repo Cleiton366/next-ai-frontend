@@ -17,11 +17,16 @@ export default function ChatSideMenu({
     setChatSideMenu(false);
   }
 
+  function newChat() {
+    setCurrentChat(null);
+    setChatSideMenu(false);
+  }
+
   return (
     <div className='flex w-full min-h-svh fixed'>
       <div className="flex flex-col w-72 bg-primary">
         <div className='flex justify-between p-5'>
-          <TbMessagePlus className='h-6 w-6 cursor-pointer' />
+          <TbMessagePlus onClick={newChat} className='h-6 w-6 cursor-pointer' />
           <BiMenuAltRight
             className='h-6 w-6 cursor-pointer'
             onClick={() => setChatSideMenu(false)}
