@@ -14,7 +14,7 @@ import { useRef } from 'react';
 import useToast from '@/util/use-toast';
 import { ScrollArea } from './ui/scroll-area';
 import { CircularProgress } from '@mui/material';
-import { marked } from "marked";
+import Markdown from 'react-markdown'
 import { useUser } from '@/contexts/user-context';
 
 type message = {
@@ -137,12 +137,7 @@ export default function Chat({
     return role === 'user' ? 'self-end' : 'self-start'
   }
 
-  function getMarkdownText(content: string) {
-    var rawMarkup = marked.parse(content);
-    return { __html: rawMarkup };
-  }
-
-  return (
+   return (
     <div className={`flex relative w-full min-h-svh ${chatSideMenu ? 'overflow-hidden' : ''}`}>
       {chatSideMenu ?
         <ChatSideMenu setChatSideMenu={setChatSideMenu} /> : null}
@@ -189,7 +184,9 @@ export default function Chat({
                               chat.role === 'user' ?
                                 <span className='text-[8pt] md:text-[10pt] break-words whitespace-normal'>{chat.message}</span>
                                 :
-                                <span dangerouslySetInnerHTML={getMarkdownText(chat.message)} className="text-[8pt] md:text-[10pt]" />
+                                <span className="text-[8pt] md:text-[10pt]" >
+                                  <Markdown >{chat.message}</Markdown>
+                                </span>
                             }
                           </div>
                         </div>
