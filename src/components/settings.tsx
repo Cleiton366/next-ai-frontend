@@ -22,7 +22,15 @@ import { useRouter } from "next/navigation"
 export function Settings() {
   const archivesServices = new ArchivesService();
   const chatsServices = new ChatsServices();
-  const { user, clearUser, setArchives, chats, setChats, archives } = useUser();
+  const { 
+    user, 
+    clearUser, 
+    setArchives, 
+    chats, 
+    setChats, 
+    archives,
+    setCurrentChat,
+  } = useUser();
   const router = useRouter();
 
   useEffect(() => {
@@ -51,6 +59,7 @@ export function Settings() {
     try {
       await chatsServices.deleteAllChats(user!.id);
       setChats([]);
+      setCurrentChat(null);
       useToast('Success', 'Chats deleted successfully');
     } catch (error) {
       useToast('Error', 'Failed to delete chats');
@@ -62,6 +71,7 @@ export function Settings() {
       await archivesServices.archiveAllChats(user!.id);
       setArchives([...archives, ...chats]);
       setChats([]);
+      setCurrentChat(null);
       useToast('Success', 'Chats archived successfully');
     } catch (error) {
       useToast('Error', 'Failed to archive chats');
@@ -72,6 +82,7 @@ export function Settings() {
     try {
       await archivesServices.deleteAllArchivedChats(user!.id);
       setArchives([]);
+      setCurrentChat(null);
       useToast('Success', 'Archived chats deleted successfully');
     } catch (error) {
       useToast('Error', 'Failed to delete archived chats');
