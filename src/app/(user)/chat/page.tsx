@@ -7,8 +7,9 @@ import { UserEntity } from "@/entities/user/user-entity";
 
 export default function Home() {
   const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(true);
-  const [user, setUser] = useState<UserEntity | null>(useUser().user);
   const {
+    user,
+    setUser,
     getUser,
     fetchChats,
   } = useUser();
