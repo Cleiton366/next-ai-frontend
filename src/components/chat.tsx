@@ -85,6 +85,7 @@ export default function Chat({
 
     if (!reply) {
       useToast('Error', 'This model is not working right now, please try again later or try another model');
+      setIsTyping(false);
       return;
     }
 
