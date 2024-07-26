@@ -84,7 +84,7 @@ export default function Chat({
     });
 
     if (!reply) {
-      useToast('Error', 'Failed to send message');
+      useToast('Error', 'This model is not working right now, please try again later or try another model');
       return;
     }
 

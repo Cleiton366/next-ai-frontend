@@ -14,6 +14,7 @@ export default class MessagesService {
         body: JSON.stringify(message),
       });
       const data = await response.json();
+      if(data.statusCode === 500) return null; 
       return data as Message;
     } catch (error) {
       console.log(error);
